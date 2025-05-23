@@ -13,10 +13,10 @@ use esp_idf_svc::hal::prelude::*;
 use esp_idf_svc::hal::spi::config::MODE_3;
 use esp_idf_svc::hal::spi::{SpiConfig, SpiDeviceDriver, SpiDriverConfig};
 use esp_idf_svc::hal::task::notification::Notification;
+use mipidsi::Builder;
 use mipidsi::interface::SpiInterface;
 use mipidsi::models::ST7789;
 use mipidsi::options::{ColorInversion, Orientation, Rotation};
-use mipidsi::Builder;
 use mousefood::prelude::*;
 use std::num::NonZeroU32;
 

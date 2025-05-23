@@ -6,7 +6,7 @@ use mousefood::prelude::*;
 use mousefood::ratatui::style::Style;
 use mousefood::ratatui::widgets::calendar::{CalendarEventStore, Monthly};
 use mousefood::ratatui::widgets::{Bar, BarChart, BarGroup, Block, Padding, Paragraph, Tabs, Wrap};
-use rand::{rng, Rng};
+use rand::{Rng, rng};
 use std::marker::PhantomData;
 use time::{Date, Month};
 
