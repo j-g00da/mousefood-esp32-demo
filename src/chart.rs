@@ -4,7 +4,7 @@ use esp_idf_svc::hal::delay;
 use esp_idf_svc::hal::gpio::{Gpio0, Input, PinDriver};
 use esp_idf_svc::hal::task::notification::Notification;
 use mousefood::prelude::*;
-use mousefood::ratatui::widgets::{Axis, Block, Chart, Clear, Dataset, Padding, Paragraph, Wrap};
+use mousefood::ratatui::widgets::{Axis, Block, Chart, Clear, Dataset, Paragraph, Wrap};
 use std::io::Result;
 use std::marker::PhantomData;
 
@@ -147,9 +147,7 @@ impl<B: Backend> ChartApp<B> {
 
             let style = Style::default().fg(Color::Black).bg(Color::Yellow);
             let area = center(frame.area(), Constraint::Length(24), Constraint::Length(8));
-            let block = Block::bordered()
-                .border_style(style)
-                .title("Popup!");
+            let block = Block::bordered().border_style(style).title("Popup!");
             let text = Paragraph::new(LOREM_IPSUM)
                 .block(block)
                 .style(style)
