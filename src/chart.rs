@@ -148,7 +148,6 @@ impl<B: Backend> ChartApp<B> {
             let style = Style::default().fg(Color::Black).bg(Color::Yellow);
             let area = center(frame.area(), Constraint::Length(24), Constraint::Length(8));
             let block = Block::bordered()
-                .padding(Padding::horizontal(1))
                 .border_style(style)
                 .title("Popup!");
             let text = Paragraph::new(LOREM_IPSUM)
