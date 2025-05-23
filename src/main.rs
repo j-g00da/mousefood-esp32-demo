@@ -1,10 +1,12 @@
 mod chart;
+mod gauge;
 mod helpers;
 mod lorem;
 mod ratatui_logo;
 mod tabs;
 
 use crate::chart::ChartApp;
+use crate::gauge::GaugeApp;
 use crate::ratatui_logo::RatatuiLogoApp;
 use crate::tabs::TabsApp;
 use esp_idf_svc::hal::delay::Ets;
@@ -91,6 +93,9 @@ fn main() {
             .run(&mut terminal, &mut notification, &mut button)
             .unwrap();
         ChartApp::new()
+            .run(&mut terminal, &mut notification, &mut button)
+            .unwrap();
+        GaugeApp::new()
             .run(&mut terminal, &mut notification, &mut button)
             .unwrap();
     }
