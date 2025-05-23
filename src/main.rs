@@ -21,6 +21,8 @@ use mipidsi::models::ST7789;
 use mipidsi::options::{ColorInversion, Orientation, Rotation};
 use mousefood::prelude::*;
 use std::num::NonZeroU32;
+use std::thread;
+use std::time::Duration;
 
 const DISPLAY_OFFSET: (u16, u16) = (52, 40);
 const DISPLAY_SIZE: (u16, u16) = (135, 240);
@@ -89,14 +91,25 @@ fn main() {
         RatatuiLogoApp::new()
             .run(&mut terminal, &mut notification, &mut button)
             .unwrap();
+
+        thread::sleep(Duration::from_millis(200));
+
         TabsApp::new()
             .run(&mut terminal, &mut notification, &mut button)
             .unwrap();
+
+        thread::sleep(Duration::from_millis(200));
+
         ChartApp::new()
             .run(&mut terminal, &mut notification, &mut button)
             .unwrap();
+
+        thread::sleep(Duration::from_millis(200));
+
         GaugeApp::new()
             .run(&mut terminal, &mut notification, &mut button)
             .unwrap();
+
+        thread::sleep(Duration::from_millis(200));
     }
 }
