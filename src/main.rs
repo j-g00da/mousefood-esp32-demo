@@ -4,11 +4,17 @@ mod helpers;
 mod lorem;
 mod ratatui_logo;
 mod tabs;
+mod voltage;
 
 use crate::chart::ChartApp;
 use crate::gauge::GaugeApp;
 use crate::ratatui_logo::RatatuiLogoApp;
 use crate::tabs::TabsApp;
+use crate::voltage::VoltageApp;
+use esp_idf_svc::hal::adc::Resolution;
+use esp_idf_svc::hal::adc::attenuation::DB_11;
+use esp_idf_svc::hal::adc::oneshot::config::{AdcChannelConfig, Calibration};
+use esp_idf_svc::hal::adc::oneshot::{AdcChannelDriver, AdcDriver};
 use esp_idf_svc::hal::delay::Ets;
 use esp_idf_svc::hal::gpio::{AnyIOPin, InterruptType, PinDriver};
 use esp_idf_svc::hal::prelude::*;
@@ -83,6 +89,19 @@ fn main() {
             .unwrap();
     }
 
+    // Setup battery voltage reader
+    let adc_driver = AdcDriver::new(peripherals.adc1).unwrap();
+    let mut battery_adc_channel = AdcChannelDriver::new(
+        &adc_driver,
+        peripherals.pins.gpio34,
+        &AdcChannelConfig {
+            attenuation: DB_11,
+            calibration: Calibration::Line,
+            resolution: Resolution::Resolution12Bit,
+        },
+    )
+    .unwrap();
+
     // Setup Mousefood and Ratatui
     let backend = EmbeddedBackend::new(&mut display, Default::default());
     let mut terminal = Terminal::new(backend).unwrap();
@@ -108,6 +127,18 @@ fn main() {
 
         GaugeApp::new()
             .run(&mut terminal, &mut notification, &mut button)
+            .unwrap();
+
+        thread::sleep(Duration::from_millis(200));
+
+        VoltageApp::new()
+            .run(
+                &mut terminal,
+                &mut notification,
+                &mut button,
+                &adc_driver,
+                &mut battery_adc_channel,
+            )
             .unwrap();
 
         thread::sleep(Duration::from_millis(200));
